@@ -1,6 +1,7 @@
 package com.krilan.taskmanagement.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,46 +10,80 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.krilan.taskmanagement.entity.Task;
 import com.krilan.taskmanagement.service.impl.TaskService;
 
 @Controller
+@RequestMapping("/tasks")
 public class TaskDetailController {
 
-    @Autowired
-    private TaskService taskService;
+	@Autowired
+	private TaskService taskService;
+	
 
-    // Display the task registration form and list of tasks
-    @GetMapping("/tasks")
-    public String showTaskForm(Model model) {
-       // model.addAttribute("task", new Task());  // Empty Task object for the form
-       // List<Task> tasks = taskService.getAllTasks();
-       // model.addAttribute("taskData", tasks);  // Add all tasks to the model
-        return "taskdetail";  // Corrected view name
-    }
 
-    // Handle the task registration form submission
-    @PostMapping("/tasks")
-    public String registerTask(@ModelAttribute("task") Task task) {
-        taskService.saveTask(task);
-        return "redirect:/tasks"; 
-    }
+	// Display the task registration form and list of tasks
+	@GetMapping({"","/"})
+	public String index(Model model) {
 
-    // Handle task completion
-    @GetMapping("/tasks/{id}/complete")
-    public String completeTask(@PathVariable Long id) {
-       // Task task = taskService.getTaskById(id);
-       // task.setCompleted(true);
-        //taskService.saveTask(task);
-        return "redirect:/tasks";
-    }
+		List<Task> tasks = taskService.getAllTasks();
+		model.addAttribute("tasks", tasks);
+		return "tasks/index";
+	}
+	
+	
+	@GetMapping("/create")
+	public String showCreteTaskForm(Model model) {
+		model.addAttribute("task",new Task());
+		return "tasks/create-form";
+	}
+	
+	@PostMapping("/store")
+	public String creteNewTask(@ModelAttribute Task task) {
+		taskService.createTask(task);
+		return "redirect:/tasks";
+	}
+	
+	
+	@GetMapping("/edit/{id}")
+	public String showUpdateTaskForm(@PathVariable Long id,Model model) {
+		Optional<Task> task = taskService.getById(id);
+		if(task.isPresent()) {
+			model.addAttribute("task",task.get());
+			return "tasks/update-form";
+		}
+		return "redirect:/tasks";
+		
+	}
+	
+	@PostMapping("/update/{id}")
+	public String updateTask(@PathVariable Long id,@ModelAttribute Task task) {
+		Task updatedTask = taskService.updateTask(id, task);
+		if(updatedTask!=null) {
+			return "redirect:/tasks";
 
-    // Handle task deletion
-    @GetMapping("/tasks/{id}/delete")
-    public String deleteTask(@PathVariable Long id) {
-       // taskService.deleteTask(id);
-        return "redirect:/tasks";
-    }
+		}
+		return "tasks/update-form";
+	}
+	
+	
+
+	// Handle task completion
+	@GetMapping("/complete/{id}")
+	public String completeTask(@PathVariable Long id) {
+		// Task task = taskService.getTaskById(id);
+		// task.setCompleted(true);
+		// taskService.saveTask(task);
+		return "redirect:/tasks";
+	}
+
+	// Handle task deletion
+	@GetMapping("/delete/{id}")
+	public String deleteTask(@PathVariable Long id) {
+		// taskService.deleteTask(id);
+		return "redirect:/tasks";
+	}
 
 }

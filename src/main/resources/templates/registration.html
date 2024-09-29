@@ -14,8 +14,10 @@
         <form th:action="@{/registration}" method="post" th:object="${user}">
 
             <label for="name">FullName:</label>
-            <input th:field="*{fullName}" type="text" id="name" name="name" required>
-
+            <input th:field="*{name}" type="text" id="name" name="name" required>
+			
+			<label for="name">UserName:</label>
+            <input th:field="*{username}" type="text" id="userName" name="userName" required>
             <label for="email">Email:</label>
             <input th:field="*{email}" type="email" id="email" name="email" required>
 
@@ -23,7 +25,7 @@
             <input th:field="*{password}" type="password" id="password" name="password" required>
             
             <label for="confirm-password">Confirm Password:</label>
-            <input th:field="*{confirmpassword}" type="password" id="confirm-password" name="confirm-password" required>
+            <input th:field="*{confirmPassword}" type="password" id="confirm-password" name="confirm-password" required>
             
             <button type="submit">Register</button>
         </form>

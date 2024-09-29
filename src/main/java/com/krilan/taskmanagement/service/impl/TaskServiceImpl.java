@@ -27,12 +27,12 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Optional<Task> getTaskById(int id) {
+    public Optional<Task> getTaskById(Long id) {
         return taskRepository.findById(id);
     }
 
     @Override
-    public Task updateTask(int id, Task taskDetails) {
+    public Task updateTask(Long id, Task taskDetails) {
         Optional<Task> optionalTask = taskRepository.findById(id);
 
         if (optionalTask.isPresent()) {
@@ -50,12 +50,17 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void deleteTask(int id) {
+    public void deleteTask(Long id) {
         taskRepository.deleteById(id);
     }
 
     @Override
-    public List<Task> getTasksByEmail(String email) {
-        return taskRepository.findByEmailid(email);
+    public Task getTasksByEmail(String email) {
+        return taskRepository.findByEmail(email);
+    }
+    
+    @Override
+    public Optional<Task> getById(Long id){
+    	return taskRepository.findById(id);
     }
 }

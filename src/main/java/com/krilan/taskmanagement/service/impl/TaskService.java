@@ -5,22 +5,22 @@ import java.util.List;
 import java.util.Optional;
 
 public interface TaskService {
-	Task saveTask();
-    // Create a new task
+	
+	Optional<Task> getById(Long id);
     Task createTask(Task task);
 
     // Get all tasks
     List<Task> getAllTasks();
 
     // Get a task by ID
-    Optional<Task> getTaskById(int id);
+    Optional<Task> getTaskById(Long id);
 
     // Update an existing task
-    Task updateTask(int id, Task taskDetails);
+    Task updateTask(Long id, Task taskDetails);
 
     // Delete a task by ID
-    void deleteTask(int id);
+    void deleteTask(Long id);
 
     // Get tasks by user email
-    List<Task> getTasksByEmail(String email);
+    Task getTasksByEmail(String email);
 }

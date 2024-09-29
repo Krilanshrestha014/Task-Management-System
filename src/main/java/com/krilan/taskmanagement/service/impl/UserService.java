@@ -15,7 +15,7 @@ public interface UserService {
 		List<User> getAllUser();
 
 		User getUserById(int id);
-		User findByUsername(String userName);
+		User findByEmail(String email);
 
-		boolean checkLogin(String username, String password);
+		
 }
