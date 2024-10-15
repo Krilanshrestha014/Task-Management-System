@@ -23,4 +23,8 @@ public interface TaskService {
 
     // Get tasks by user email
     Task getTasksByEmail(String email);
+    
+    //save tasks
+    Task saveTask(Task task);
 }
+

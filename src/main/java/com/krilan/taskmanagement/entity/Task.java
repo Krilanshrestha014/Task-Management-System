@@ -12,6 +12,15 @@ public class Task {
     public Long getId() {
 		return id;
 	}
+    // Default Constructor
+    public Task() {
+    }
+
+    // Parameterized Constructor
+    public Task(Long id, String name, boolean completed) {
+        this.id = id;
+    }
+    
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -74,8 +83,4 @@ public class Task {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private String email;
-
-
-
-   
 }

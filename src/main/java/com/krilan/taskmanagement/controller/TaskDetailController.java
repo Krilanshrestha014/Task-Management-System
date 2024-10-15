@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.krilan.taskmanagement.entity.Task;
+import com.krilan.taskmanagement.repository.TaskRepository;
+import com.krilan.taskmanagement.repository.UserRepository;
 import com.krilan.taskmanagement.service.impl.TaskService;
 
 @Controller
@@ -21,8 +23,6 @@ public class TaskDetailController {
 
 	@Autowired
 	private TaskService taskService;
-	
-
 
 	// Display the task registration form and list of tasks
 	@GetMapping({"","/"})
@@ -54,11 +54,10 @@ public class TaskDetailController {
 			model.addAttribute("task",task.get());
 			return "tasks/update-form";
 		}
-		return "redirect:/tasks";
-		
+		return "redirect:/tasks";	
 	}
 	
-	@PostMapping("/update/{id}")
+	@PostMapping("/edit/{id}")
 	public String updateTask(@PathVariable Long id,@ModelAttribute Task task) {
 		Task updatedTask = taskService.updateTask(id, task);
 		if(updatedTask!=null) {
@@ -67,23 +66,30 @@ public class TaskDetailController {
 		}
 		return "tasks/update-form";
 	}
-	
-	
 
 	// Handle task completion
-	@GetMapping("/complete/{id}")
-	public String completeTask(@PathVariable Long id) {
-		// Task task = taskService.getTaskById(id);
-		// task.setCompleted(true);
-		// taskService.saveTask(task);
-		return "redirect:/tasks";
-	}
+    @GetMapping("/complete/{id}")
+    public String completeTask(@PathVariable Long id) {
+        Optional<Task> optionalTask = taskService.getById(id);
+        if (optionalTask.isPresent()) {
+            Task task = optionalTask.get();
+            task.setCompleted(true);
+            taskService.saveTask(task);
+        }
+        return "redirect:/tasks";
+    }
 
-	// Handle task deletion
-	@GetMapping("/delete/{id}")
-	public String deleteTask(@PathVariable Long id) {
-		// taskService.deleteTask(id);
-		return "redirect:/tasks";
-	}
-
+    @GetMapping("/delete/{id}")
+    public String deleteTask(@PathVariable Long id, Model model) {
+        Optional<Task> task = taskService.getById(id); 
+        if (task.isPresent()) {
+            taskService.deleteTask(task.get().getId());  
+            model.addAttribute("message", "Task deleted successfully");
+        } else {
+            model.addAttribute("error", "Task not found");
+        }
+        return "redirect:/tasks";  
+    }
 }
+
+    

@@ -10,8 +10,4 @@ public class ManagerController {
 	public String index() {
 		return "manager/index";
 	}
-	
-	
-	 
-
 }

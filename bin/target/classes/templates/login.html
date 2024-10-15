@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Management System - Login</title>
+    <link rel="stylesheet" href="">
+</head>
+<body>
+    <header>
+        <h1>Login</h1>
+    </header>
+    <main>
+        <form th:action="@{/login}" method="post" th:object="${user}">
+			<span th:if="${error}" th:text="${error}"></span>	
+            <label for="username">Username:</label>
+            <input th:field="*{username}" type="text" id="username" name="username" required>
+            
+            <label for="password">Password:</label>
+            <input th:field="*{password}" type="password" id="password" name="password" required>
+            
+            <button type="submit">Login</button>
+        </form>
+        <p>Don't have an account? <a href="/registration">Register here</a></p>
+    </main>
+    <footer>
+        <p>&copy; 2024 Task Management System</p>
+    </footer>
+</body>
+</html>

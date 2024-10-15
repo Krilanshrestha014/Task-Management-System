@@ -6,4 +6,5 @@ import com.krilan.taskmanagement.entity.Task;
 
 public interface TaskRepository extends JpaRepository <Task, Long> {
 		  Task findByEmail(String email);
+		  Task deleteById(int id);
 }
