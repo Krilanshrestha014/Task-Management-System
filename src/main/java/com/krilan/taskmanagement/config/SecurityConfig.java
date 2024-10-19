@@ -11,14 +11,14 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import com.krilan.taskmanagement.service.UserDetailsServiceImpl;
+import com.krilan.taskmanagement.service.CustomUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
     
     @Autowired
-    private UserDetailsServiceImpl userDetailsServiceImpl;
+    private CustomUserDetailsService userDetailsServiceImpl;
 
     @Bean
     public PasswordEncoder encoder() {

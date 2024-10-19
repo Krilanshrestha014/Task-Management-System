@@ -1,15 +1,17 @@
 package com.krilan.taskmanagement.controller;
 
-
-
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties.Authentication;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.krilan.taskmanagement.entity.Task;
 import com.krilan.taskmanagement.entity.User;
 import com.krilan.taskmanagement.service.impl.UserService;
 
@@ -48,5 +50,4 @@ public class AuthController {
         model.addAttribute("user", new User());
         return "login"; 
     }
-
 }
